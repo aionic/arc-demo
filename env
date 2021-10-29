@@ -1,0 +1,8 @@
+
+#export Location
+#export RGName
+#export NamePrefix
+#export AKSDeployName
+
+#export ArcRGName
+#export ArcClusterName
