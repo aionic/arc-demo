@@ -1,8 +1,19 @@
+export Location=eastus
 
-#export Location
-#export RGName
-#export NamePrefix
-#export AKSDeployName
+export RGName=$(cat /dev/urandom | tr -cd 'a-z0-9' | head -c 5)
 
-#export ArcRGName
-#export ArcClusterName
+export AKSDeploymentName="${RGName}-aks-deployment"
+
+export AKSAdmingGroupName="REPLACE_WITH_AAD_GROUP_THAT_HAS_CLUSTER_ADMINS"
+
+export ArcRGName="${RGName}-arc"
+export ArcClusterName="${ArcRGName}-cluster"
+
+export CustomLocationRGName="${ArcRGName}"
+export CustomLocationName="${RGName}-location"
+
+export AppServiceNamespace="appservice-ns"
+export AppServiceExtensionName="appservice-ext"
+
+export ASEnvironmentName="appservice-env"
+export ASEnvironmentRGName="${ArcRGName}"

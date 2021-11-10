@@ -1,12 +1,12 @@
-param namePrefix string
-
+param uniqueSuffix string=uniqueString(resourceGroup().id)
+param AdmingGroupObjectId string
 param location string = 'eastus'
 
-param logAnalyticsWksName string = 'log-${namePrefix}'
-param aksClusterName string = 'aks-${namePrefix}'
+param logAnalyticsWksName string = 'log-${uniqueSuffix}'
+param aksClusterName string = 'aks-${uniqueSuffix}'
 param aksNodeResourceGroup string = 'MC_${aksClusterName}_${location}'
 
-param ipAddressName string = 'ip-${namePrefix}'
+param ipAddressName string = 'ip-${uniqueSuffix}'
 
 param defaultTags object = {}
 param vmSize string = 'Standard_D2ds_v4'
@@ -26,6 +26,7 @@ module cluster 'aks.bicep'={
     nodeResourceGroup: aksNodeResourceGroup
     vmSize: vmSize
     logAnalyticsWorkspaceId: la.outputs.resourceId
+    adminGroupObjectId: AdmingGroupObjectId
     tags: defaultTags
   }
 }
@@ -33,6 +34,7 @@ module cluster 'aks.bicep'={
 
 var aksNodeScope = resourceGroup(aksNodeResourceGroup)
 
+//TODO: This is really part of ARC deployment need to move it there
 module ipAddress 'ipAddress.bicep'={
   name: ipAddressName
   scope: aksNodeScope

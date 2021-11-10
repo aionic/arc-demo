@@ -2,11 +2,12 @@ targetScope = 'resourceGroup'
 
 param clusterName string
 param logAnalyticsWorkspaceId string
+param adminGroupObjectId string
 
 param location string = resourceGroup().location
 param agentCount int = 3
 param vmSize string = 'Standard_D2ds_v4'
-param nodeResourceGroup string = 'MC_${clusterName}_${location}'
+param nodeResourceGroup string = '${resourceGroup().name}_MC_${clusterName}_${location}'
 
 param tags object = {}
 
@@ -24,10 +25,13 @@ resource aks 'Microsoft.ContainerService/managedClusters@2020-12-01'={
     nodeResourceGroup: nodeResourceGroup
     aadProfile:{
       managed:true
+      adminGroupObjectIDs:[
+        '${adminGroupObjectId}'
+      ]
     }
     // kubernetesVersion: kubernetesVersion
     enableRBAC: true
-    dnsPrefix: '${clusterName}-dns'
+    dnsPrefix: clusterName
     agentPoolProfiles:[
       {
         name: 'agentpool'
