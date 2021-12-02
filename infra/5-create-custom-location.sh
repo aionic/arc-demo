@@ -9,6 +9,8 @@ source $ROOT/readEnv.sh
 
 source ./utilities.sh
 
+az connectedk8s enable-features --features cluster-connect custom-locations -n "$ArcClusterName" -g "$ArcRGName"
+
 az deployment sub create -l "$Location" -n "$CustomLocationRGName"'deploy'"$Location" -f ResourceGroup.bicep \
 -p location="$Location" \
 -p resourcegroupName="$CustomLocationRGName"

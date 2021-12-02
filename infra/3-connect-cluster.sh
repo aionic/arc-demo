@@ -22,7 +22,7 @@ az deployment sub create -l "$Location" -n "$ArcRGName"'deploy'"$Location" -f Re
 ClusterName=$(GetClusterName)
 
 #connect to the cluster
-az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --admin
+az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --overwrite-existing --admin
 kubectl get ns
 
 #connect the cluster

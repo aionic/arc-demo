@@ -25,7 +25,7 @@ logAnalyticsKey=$(az monitor log-analytics workspace get-shared-keys \
 logAnalyticsKeyEnc=$(printf %s "$logAnalyticsKey" | base64 -w0) # Needed for the next step
 
 
-az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --admin
+az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --overwrite-existing --admin
 
 az k8s-extension create \
     --resource-group "$ArcRGName" \
@@ -39,7 +39,7 @@ az k8s-extension create \
     --release-namespace $AppServiceNamespace \
     --configuration-settings "Microsoft.CustomLocation.ServiceAccount=default" \
     --configuration-settings "appsNamespace=${AppServiceNamespace}" \
-    --configuration-settings "clusterName=${ASEnvironmentName}" \
+    --configuration-settings "clusterName=${AppServiceExtensionName}" \
     --configuration-settings "loadBalancerIp=${StaticIP}" \
     --configuration-settings "keda.enabled=true" \
     --configuration-settings "buildService.storageClassName=default" \

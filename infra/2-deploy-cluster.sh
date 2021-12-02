@@ -25,7 +25,7 @@ az deployment group create -g "$RGName" -n "$AKSDeploymentName" -f main.bicep \
 
 ClusterName=$(GetClusterName)
 
-az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --admin
+az aks get-credentials --resource-group "$RGName" --name "$ClusterName" --overwrite-existing --admin
 kubectl get ns
 
 popd
